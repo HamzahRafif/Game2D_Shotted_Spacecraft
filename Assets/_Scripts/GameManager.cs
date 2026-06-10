@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("Stage Data")]
+    public StageData currentStageData;
+
     [Header("Stage Settings")]
-    public int currentStage = 1;
-    public float stageDuration = 60f;
-    public int minKillsToPass = 25;
+    private int currentStage;
+    private int minKillsToPass;
     private float timer;
     private bool stageCompleted = false;
 
@@ -21,12 +23,17 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
 
     [Header("UI References (Text)")]
-    // PERUBAHAN DI SINI: Menggunakan TextMeshProUGUI khusus untuk teks Canvas
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI killText;
 
-    [Header("= SLOT TUGAS TEMAN: UI HEARTS =")]
+    [Header("UI Windows (Tambahan Baru)")]
+    // Referensi untuk objek UI Panel yang akan muncul saat Kalah/Menang
+    public GameObject gameOverPanel;
+    public GameObject stageClearPanel;
+    public TextMeshProUGUI gameOverReasonText; // Untuk menampilkan alasan kalah (opsional)
+
+    [Header("UI HP Player")]
     public Image[] heartIcons;
     public Sprite fullHeartSprite;
     public Sprite emptyHeartSprite;
@@ -42,7 +49,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        timer = stageDuration;
+        // Pastikan waktu game berjalan normal saat mulai
+        Time.timeScale = 1f; 
+        
+        if(currentStageData != null)
+{
+        currentStage = currentStageData.stageNumber;
+        minKillsToPass = currentStageData.targetKills;
+        timer = currentStageData.stageDuration;
+    }
+        // Menyembunyikan panel UI saat game dimulai
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (stageClearPanel != null) stageClearPanel.SetActive(false);
+
         UpdateUI();
     }
 
@@ -69,6 +88,12 @@ public class GameManager : MonoBehaviour
         score += points;
         kills++;
         UpdateUI();
+
+        // KONDISI BARU: Cek langsung jika kill sudah mencapai target 25
+        if (kills >= minKillsToPass)
+        {
+            TriggerStageClear();
+        }
     }
 
     public void TakeDamage()
@@ -80,7 +105,7 @@ public class GameManager : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            TriggerGameOver("Pesawatmu Hancur Lebur!");
+            TriggerGameOver("Pesawatmu Hancur!");
         }
     }
 
@@ -94,6 +119,30 @@ public class GameManager : MonoBehaviour
             string minutes = Mathf.FloorToInt(timer / 60).ToString("00");
             string seconds = Mathf.FloorToInt(timer % 60).ToString("00");
             timerText.text = "TIME: " + minutes + ":" + seconds;
+        }
+        
+                // Mengulang pengecekan sebanyak ukuran array heartIcons (yaitu 3 kali)
+        for (int i = 0; i < heartIcons.Length; i++)
+        {
+            if (i < playerHealth)
+            {
+                // Jika indeks iterasi lebih kecil dari sisa darah, tampilkan hati penuh
+                heartIcons[i].enabled = true;
+                if (fullHeartSprite != null) heartIcons[i].sprite = fullHeartSprite;
+            }
+            else
+            {
+                // Jika player menerima damage dan indeks melebihi sisa darah:
+                if (emptyHeartSprite != null)
+                {
+                    heartIcons[i].sprite = emptyHeartSprite;
+                }
+                else
+                {
+                    // Jika aset gambar kosong tidak dipasang, objek UI hati langsung dinonaktifkan dari layar
+                    heartIcons[i].enabled = false;
+                }
+            }
         }
 
         if (heartIcons != null && heartIcons.Length > 0)
@@ -122,11 +171,10 @@ public class GameManager : MonoBehaviour
 
     void CheckStageResult()
     {
+        // Fungsi ini dipicu jika waktu habis (timer == 0)
         if (kills >= minKillsToPass)
         {
-            stageCompleted = true;
-            Debug.Log("STAGE 1 CLEAR! Target terpenuhi.");
-            if (enemySpawner != null) enemySpawner.SetActive(false);
+            TriggerStageClear();
         }
         else
         {
@@ -134,16 +182,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // FUNGSI BARU: Dipanggil saat berhasil menyelesaikan stage
+    void TriggerStageClear()
+    {
+        stageCompleted = true;
+        Debug.Log("STAGE 1 CLEAR! Target terpenuhi.");
+        
+        if (enemySpawner != null) enemySpawner.SetActive(false);
+
+        // Memunculkan UI Stage Clear
+        if (stageClearPanel != null) stageClearPanel.SetActive(true);
+
+        // Menghentikan pergerakan game (Stage Terhenti)
+        Time.timeScale = 0f; 
+    }
+
     void TriggerGameOver(string reason)
     {
         isGameOver = true;
         Debug.Log("GAME OVER: " + reason);
+        
         if (enemySpawner != null) enemySpawner.SetActive(false);
+
+        // Memunculkan UI Game Over
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        
+        // Menampilkan teks alasan kalah jika ada komponennya
+        if (gameOverReasonText != null) gameOverReasonText.text = reason;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null && playerHealth <= 0)
         {
             player.SetActive(false);
         }
+
+        // Menghentikan pergerakan game (Stage Terhenti)
+        Time.timeScale = 0f; 
     }
 }
