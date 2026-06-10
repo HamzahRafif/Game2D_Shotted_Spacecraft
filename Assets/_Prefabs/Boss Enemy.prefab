@@ -35,7 +35,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6158577965155423468}
+  - {fileID: 2520942259912658698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &858359370405700937
@@ -213,72 +213,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossShooter
   bulletPrefab: {fileID: 9044132185103465870, guid: c29cd651308a9b74eb169596c7eff989, type: 3}
-  firePoint: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
+  firePoint: {fileID: 2520942259912658698}
   modeDuration: 30
   spreadCount: 5
   spreadAngle: 30
   spreadFireRate: 0.5
   spiralSpeed: 200
   spiralFireRate: 0.1
---- !u!1001 &5090173299780262699
-PrefabInstance:
+--- !u!1 &1845464786365002769
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8324236538319909361}
-    m_Modifications:
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.246
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002532438658587154, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-      propertyPath: m_Name
-      value: Firepoint
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: da1291be589971d43834efc0d62d9d00, type: 3}
---- !u!4 &6158577965155423468 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1428845743635402695, guid: da1291be589971d43834efc0d62d9d00, type: 3}
-  m_PrefabInstance: {fileID: 5090173299780262699}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2520942259912658698}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2520942259912658698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845464786365002769}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.255, z: 0}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8324236538319909361}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
