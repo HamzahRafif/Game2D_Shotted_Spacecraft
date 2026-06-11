@@ -7,16 +7,27 @@ public class BossBullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
+        // Tetap menggunakan gerakan bawaan awal temanmu (lurus ke bawah secara lokal)
+        transform.Translate(Vector3.down * speed * Time.deltaTime, Space.Self);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        // Pengaman: Jangan hancur jika menyentuh Collider si Boss sendiri atau Enemy lain
+        if (other.CompareTag("Enemy") || other.name.Contains("Boss"))
         {
-            GameManager.Instance.TakeDamage();
+            return;
         }
 
-        Destroy(gameObject);
+        // Peluru hanya meledak dan memberi damage jika mengenai Player
+        if (other.CompareTag("Player"))
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.TakeDamage();
+            }
+            
+            Destroy(gameObject); // Hancur secara sah setelah kena Player
+        }
     }
 }

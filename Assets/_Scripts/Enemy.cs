@@ -36,10 +36,9 @@ public class Enemy : MonoBehaviour
             {
                 ExplosionPooler.Instance.SpawnExplosion(transform.position);
             }
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.TakeDamage();
-            }
+
+            // GameManager.Instance.TakeDamage() DIHAPUS DARI SINI
+
             Destroy(gameObject);
         }
     }

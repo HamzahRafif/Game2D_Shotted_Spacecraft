@@ -21,8 +21,8 @@ public class BossShooter : MonoBehaviour
 
     private float modeTimer;
     private bool isSpreadMode = true;
-
     private float shootTimer;
+    private float currentSpiralAngle = 0f; 
 
     void Start()
     {
@@ -31,6 +31,8 @@ public class BossShooter : MonoBehaviour
 
     void Update()
     {
+        if (firePoint == null) return; 
+
         HandleModeSwitch();
 
         if (isSpreadMode)
@@ -43,7 +45,6 @@ public class BossShooter : MonoBehaviour
         }
     }
 
-    // 🔥 SWITCH MODE EVERY 30 SECONDS
     void HandleModeSwitch()
     {
         modeTimer -= Time.deltaTime;
@@ -52,60 +53,40 @@ public class BossShooter : MonoBehaviour
         {
             isSpreadMode = !isSpreadMode;
             modeTimer = modeDuration;
-
-            Debug.Log("Boss Mode: " +
-                (isSpreadMode ? "SPREAD" : "SPIRAL"));
+            shootTimer = 0f; 
         }
     }
 
-    // 🔥 SPREAD SHOT
     void SpreadShoot()
     {
         shootTimer += Time.deltaTime;
 
-        if (shootTimer < spreadFireRate)
-            return;
-
+        if (shootTimer < spreadFireRate) return;
         shootTimer = 0f;
+
+        if (spreadCount <= 1) return;
 
         float step = spreadAngle / (spreadCount - 1);
 
         for (int i = 0; i < spreadCount; i++)
         {
-            float angle =
-                -spreadAngle / 2 +
-                step * i;
-
-            Quaternion rot =
-                Quaternion.Euler(0, 0, angle);
-
-            Instantiate(
-                bulletPrefab,
-                firePoint.position,
-                rot
-            );
+            float angle = -spreadAngle / 2 + step * i;
+            Quaternion rot = Quaternion.Euler(0, 0, transform.eulerAngles.z + angle);
+            Instantiate(bulletPrefab, firePoint.position, rot);
         }
     }
 
-    // 🔥 SPIRAL SHOT
     void SpiralShoot()
     {
         shootTimer += Time.deltaTime;
 
-        if (shootTimer < spiralFireRate)
-            return;
-
+        if (shootTimer < spiralFireRate) return;
         shootTimer = 0f;
 
-        float angle = Time.time * spiralSpeed;
+        currentSpiralAngle += spiralSpeed * spiralFireRate;
+        if (currentSpiralAngle >= 360f) currentSpiralAngle -= 360f;
 
-        Quaternion rot =
-            Quaternion.Euler(0, 0, angle);
-
-        Instantiate(
-            bulletPrefab,
-            firePoint.position,
-            rot
-        );
+        Quaternion rot = Quaternion.Euler(0, 0, transform.eulerAngles.z + currentSpiralAngle);
+        Instantiate(bulletPrefab, firePoint.position, rot);
     }
 }

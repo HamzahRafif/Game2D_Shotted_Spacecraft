@@ -1304,9 +1304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f9f2b55c9a75f41b1d03b29cdb61d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentStage: 1
-  stageDuration: 60
-  minKillsToPass: 25
+  bossSpawnPoint: {fileID: 0}
+  BossWarningPanel: {fileID: 0}
+  gameSettings: {fileID: 11400000, guid: 8271550907fb2f548a2967b67e6941e2, type: 2}
   playerHealth: 3
   score: 0
   kills: 0

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a32faf1775610a47adaf8e795625db0, type: 3}
   m_Name: Stage2
   m_EditorClassIdentifier: Assembly-CSharp::GameSettings
-  stageDuration: 300
-  minKillsToPass: 40
+  stageDuration: 90
+  minKillsToPass: 10
   startingHealth: 3
   defaultEnemyScore: 100
   startingCredits: 0
   hasBoss: 1
   bossPrefab: {fileID: 280797888074200549, guid: 456d523ea31d0b54f863f3afaf754235, type: 3}
-  killsBeforeBoss: 40
+  killsBeforeBoss: 10
   warningDuration: 3
