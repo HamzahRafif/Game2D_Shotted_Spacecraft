@@ -20,4 +20,9 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Stage2");
     }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
